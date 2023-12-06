@@ -1,27 +1,38 @@
+# security.yaml
+
 security:
-    enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
+    encoders:
+        App\Entity\Medecin:
+            algorithm: plaintext
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        App\Entity\Patient:
+            algorithm: plaintext  # Use plaintext for the Patient entity
+
+    enable_authenticator_manager: true
+
     providers:
-        users_in_memory: { memory: null }
+        medecin_provider:
+            id: App\Security\MedecinUserProvider
+        patient_provider:
+            id: App\Security\PatientUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            logout:
+                path: app_logout
+            switch_user:
+                provider: medecin_provider  # Specify the provider for switch_user
+            custom_authenticators:
+                - App\Security\LoginFormAuthenticator
+                - App\Security\PatientLoginFormAuthenticator
+            entry_point: App\Security\PatientLoginFormAuthenticator  # Choose one of your authenticators
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+    # ... rest of the configuration
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
@@ -29,10 +40,6 @@ security:
 when@test:
     security:
         password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
                 cost: 4 # Lowest possible value for bcrypt
