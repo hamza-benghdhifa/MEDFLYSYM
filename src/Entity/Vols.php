@@ -1,87 +1,60 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\VolsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
-#[ORM\Table(name: "vols")]
-#[ORM\Entity(repositoryClass: VolsRepository::class)]
-
+/**
+ * Vols
+ *
+ * @ORM\Table(name="vols", indexes={@ORM\Index(name="nom_airways", columns={"nom_airways"})})
+ * @ORM\Entity
+ */
 class Vols
 {
-    #[ORM\Column(name: "id_vol", type: "integer", nullable: false)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    private int $idVol;
-
-    #[ORM\Column(name: "nom_airways", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de la compagnie aérienne ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de la compagnie aérienne ne peut pas dépasser 255 caractères.")]
-    private string $nomAirways;
-
-    #[ORM\Column(name: "nb_billet", type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Le nombre de billets ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le nombre de billets doit être positif ou nul.")]
-    private int $nbBillet;
-
-    #[ORM\Column(name: "prix_billet", type: "float", precision: 10, scale: 0, nullable: false)]
-    #[Assert\NotBlank(message: "Le prix du billet ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le prix du billet doit être positif ou nul.")]
-    private float $prixBillet;
-
-    #[ORM\Column(name: "date_depart", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "La date de départ ne peut pas être vide.")]
-    #[Assert\Regex(
-        pattern: '/^\d{4}\/\d{2}\/\d{2}$/',
-        message: 'La date de départ doit être au format "aaaa/mm/jj".'
-    )]
-    private string $dateDepart;
-
-    #[ORM\Column(name: "destination", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "La destination ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "La destination ne peut pas dépasser 255 caractères.")]
-    private string $destination;
-
-
-    private $uservols;
-
-    public function __construct()
-    {
-        $this->uservols = new ArrayCollection();
-    }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_vol", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idVol;
 
     /**
-     * @return ArrayCollection|Collection|Uservol[]
+     * @var string|null
+     *
+     * @ORM\Column(name="nom_airways", type="string", length=255, nullable=true)
      */
-    public function getUservols()
-    {
-        return $this->uservols;
-    }
+    private $nomAirways;
 
-    public function addUservol(Uservol $uservol): self
-    {
-        if (!$this->uservols->contains($uservol)) {
-            $this->uservols[] = $uservol;
-            $uservol->setVol($this);
-        }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nb_billet", type="integer", nullable=false)
+     */
+    private $nbBillet;
 
-        return $this;
-    }
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prix_billet", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prixBillet;
 
-    public function removeUservol(Uservol $uservol): self
-    {
-        if ($this->uservols->removeElement($uservol)) {
-            // set the owning side to null (unless already changed)
-            if ($uservol->getVol() === $this) {
-                $uservol->setVol(null);
-            }
-        }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date_depart", type="string", length=255, nullable=false)
+     */
+    private $dateDepart;
 
-        return $this;
-    }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination", type="string", length=255, nullable=false)
+     */
+    private $destination;
 
     public function getIdVol(): ?int
     {
@@ -93,7 +66,7 @@ class Vols
         return $this->nomAirways;
     }
 
-    public function setNomAirways(string $nomAirways): static
+    public function setNomAirways(?string $nomAirways): static
     {
         $this->nomAirways = $nomAirways;
 
@@ -148,16 +121,5 @@ class Vols
         return $this;
     }
 
-    // Dans la classe Vols
-public function __toString(): string
-{
-    return $this->nomAirways;
-}
-public function setVol(?Vols $vol): self
-{
-    $this->vol = $vol;
-
-    return $this;
-}
 
 }

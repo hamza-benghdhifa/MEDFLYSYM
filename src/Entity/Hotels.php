@@ -1,64 +1,64 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\HotelsRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Table(name: "hotels")]
-#[ORM\Entity(repositoryClass: HotelsRepository::class)]
+/**
+ * Hotels
+ *
+ * @ORM\Table(name="hotels", indexes={@ORM\Index(name="FK_nom_hotel", columns={"nom_hotel"})})
+ * @ORM\Entity
+ */
 class Hotels
 {
-    #[ORM\Column(name: "id_hotel", type: "integer", nullable: false)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    private int $idHotel;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_hotel", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idHotel;
 
-    #[ORM\Column(name: "nom_hotel", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de l'hôtel ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de l'hôtel ne peut pas dépasser 255 caractères.")]
-    private string $nomHotel;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nb_etoile", type="string", length=255, nullable=false)
+     */
+    private $nbEtoile;
 
-    #[ORM\Column(name: "nb_etoile", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nombre d'étoiles ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nombre d'étoiles ne peut pas dépasser 255 caractères.")]
-    private string $nbEtoile;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=false)
+     */
+    private $pays;
 
-    #[ORM\Column(name: "pays", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le pays ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom du pays ne peut pas dépasser 255 caractères.")]
-    private string $pays;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nb_chambre", type="integer", nullable=false)
+     */
+    private $nbChambre;
 
-    #[ORM\Column(name: "nb_chambre", type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Le nombre de chambres ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le nombre de chambres doit être positif ou nul.")]
-    private int $nbChambre;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prix_nuit", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prixNuit;
 
-    #[ORM\Column(name: "prix_nuit", type: "float", precision: 10, scale: 0, nullable: false)]
-    #[Assert\NotBlank(message: "Le prix par nuit ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le prix par nuit doit être positif ou nul.")]
-    private float $prixNuit;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="nom_hotel", type="string", length=255, nullable=true)
+     */
+    private $nomHotel;
 
-
-
-    
     public function getIdHotel(): ?int
     {
         return $this->idHotel;
-    }
-
-    public function getNomHotel(): ?string
-    {
-        return $this->nomHotel;
-    }
-
-    public function setNomHotel(string $nomHotel): static
-    {
-        $this->nomHotel = $nomHotel;
-
-        return $this;
     }
 
     public function getNbEtoile(): ?string
@@ -108,5 +108,18 @@ class Hotels
 
         return $this;
     }
-  
+
+    public function getNomHotel(): ?string
+    {
+        return $this->nomHotel;
+    }
+
+    public function setNomHotel(?string $nomHotel): static
+    {
+        $this->nomHotel = $nomHotel;
+
+        return $this;
+    }
+
+
 }

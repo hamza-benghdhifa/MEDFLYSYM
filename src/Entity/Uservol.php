@@ -1,67 +1,82 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\UserVolRepository;
 
-#[ORM\Table(name: "uservol")]
-#[ORM\Entity(repositoryClass: UserVolRepository::class)]
+/**
+ * Uservol
+ *
+ * @ORM\Table(name="uservol", indexes={@ORM\Index(name="idx_nom_compagnie", columns={"nom_compagnie"})})
+ * @ORM\Entity
+ */
 class Uservol
 {
-    #[ORM\Column(name: "num_passport", type: "integer", nullable: false)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "NONE")]
-    private int $numPassport;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="num_passport", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $numPassport;
 
-    #[ORM\Column(name: "usernom", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de l'utilisateur ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de l'utilisateur ne peut pas dépasser 255 caractères.")]
-    private string $usernom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usernom", type="string", length=255, nullable=false)
+     */
+    private $usernom;
 
-    #[ORM\Column(name: "userprenom", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le prénom de l'utilisateur ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le prénom de l'utilisateur ne peut pas dépasser 255 caractères.")]
-    private string $userprenom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userprenom", type="string", length=255, nullable=false)
+     */
+    private $userprenom;
 
-    #[ORM\Column(name: "nom_compagnie", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de la compagnie ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de la compagnie ne peut pas dépasser 255 caractères.")]
-    private string $nomCompagnie;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="billet_reservee", type="integer", nullable=false)
+     */
+    private $billetReservee;
 
-    #[ORM\Column(name: "billet_reservee", type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Le nombre de billets réservés ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le nombre de billets réservés doit être positif ou nul.")]
-    private int $billetReservee;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination", type="string", length=255, nullable=false)
+     */
+    private $destination;
 
-    #[ORM\Column(name: "destination", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "La destination ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "La destination ne peut pas dépasser 255 caractères.")]
-    private string $destination;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date_depart", type="string", length=255, nullable=false)
+     */
+    private $dateDepart;
 
-    #[ORM\Column(name: "date_depart",type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "La date de départ ne peut pas être vide.")]
-    private string $dateDepart;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="facture_vol", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $factureVol;
 
-    #[ORM\Column(name: "facture_vol", type: "float", precision: 10, scale: 0, nullable: false)]
-    #[Assert\NotBlank(message: "La facture du vol ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "La facture du vol doit être positive ou nulle.")]
-    private float $factureVol;
+    /**
+     * @var \Vols
+     *
+     * @ORM\ManyToOne(targetEntity="Vols")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="nom_compagnie", referencedColumnName="nom_airways")
+     * })
+     */
+    private $nomCompagnie;
 
-  
-    private ?Vols $vol;
-    
     public function getNumPassport(): ?int
     {
         return $this->numPassport;
     }
-
-    public function setNumPassport(int $numpass): static
-{
-    $this->numPassport = $numpass;
-
-    return $this;
-}
 
     public function getUsernom(): ?string
     {
@@ -83,18 +98,6 @@ class Uservol
     public function setUserprenom(string $userprenom): static
     {
         $this->userprenom = $userprenom;
-
-        return $this;
-    }
-
-    public function getNomCompagnie(): ?string
-    {
-        return $this->nomCompagnie;
-    }
-
-    public function setNomCompagnie(string $nomCompagnie): static
-    {
-        $this->nomCompagnie = $nomCompagnie;
 
         return $this;
     }
@@ -146,16 +149,18 @@ class Uservol
 
         return $this;
     }
-    public function getVol(): ?Vols
+
+    public function getNomCompagnie(): ?Vols
     {
-        return $this->vol;
+        return $this->nomCompagnie;
     }
 
-    public function setVol(?Vols $vol): static
+    public function setNomCompagnie(?Vols $nomCompagnie): static
     {
-        $this->vol = $vol;
+        $this->nomCompagnie = $nomCompagnie;
 
         return $this;
     }
-}
 
+
+}

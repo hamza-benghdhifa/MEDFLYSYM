@@ -11,8 +11,20 @@ parameters:
 services:
     App\Security\LoginFormAuthenticator:
         class: App\Security\LoginFormAuthenticator
-        # ... other configuration
+    App\Entity\Reclamation:
+        public: true
+    App\Entity\ReponseReclamation:
+        public: true
+    App\Controller\ReclamationController:
+        public: true
+        class: App\Controller\ReclamationController
+        arguments:
+            $reclamation: '@App\Entity\Reclamation'
 
+
+        # ... other configuration
+    App\Controller\ReponseReclamationController:
+        class: App\ReponseReclamation
     App\Security\PatientLoginFormAuthenticator:
         class: App\Security\PatientLoginFormAuthenticator
         # ... other configuration

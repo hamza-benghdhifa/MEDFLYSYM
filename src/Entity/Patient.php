@@ -2,39 +2,74 @@
 
 namespace App\Entity;
 
-use App\Repository\PatientRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: PatientRepository::class)]
-class Patient implements UserInterface
+/**
+ * Patient
+ *
+ * @ORM\Table(name="patient")
+ * @ORM\Entity
+ */
+class Patient
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=255, nullable=false)
+     */
+    private $nom;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Prenom", type="string", length=255, nullable=false)
+     */
+    private $prenom;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="DateNai", type="date", nullable=false)
+     */
     private $datenai;
 
-    #[ORM\Column]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="NumAssu", type="integer", nullable=false)
+     */
     private $numassu;
 
-    #[ORM\Column(length: 255)]
-    private ?string $maladie = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Maladie", type="string", length=255, nullable=false)
+     */
+    private $maladie;
 
-    #[ORM\Column(length: 255)]
-    private ?string $emailp = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="EmailP", type="string", length=255, nullable=false)
+     */
+    private $emailp;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Password", type="string", length=255, nullable=false)
+     */
+    private $password;
 
     public function getId(): ?int
     {
@@ -125,31 +160,5 @@ class Patient implements UserInterface
         return $this;
     }
 
-    // UserInterface methods
 
-    public function getUsername(): string
-    {
-        return $this->emailp;
-    }
-
-    public function getRoles(): array
-    {
-        // Return an array of roles for the user (e.g., ['ROLE_PATIENT'])
-        return ['ROLE_PATIENT'];
-    }
-
-    public function getSalt()
-    {
-        // You can leave this method blank unless you're using advanced user features
-    }
-
-    public function eraseCredentials()
-    {
-        // You can leave this method blank unless you're using advanced user features
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->emailp;
-    }
 }

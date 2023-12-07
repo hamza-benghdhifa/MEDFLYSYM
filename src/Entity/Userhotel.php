@@ -1,64 +1,72 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\UserHotelRepository;
 
-#[ORM\Table(name: "userhotel")]
-#[ORM\Entity(repositoryClass: UserHotelRepository::class)]
-
+/**
+ * Userhotel
+ *
+ * @ORM\Table(name="userhotel", uniqueConstraints={@ORM\UniqueConstraint(name="uc_userhotel", columns={"nom_hotel"})})
+ * @ORM\Entity
+ */
 class Userhotel
 {
-    #[ORM\Column(name: "numpassport", type: "integer", nullable: false)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "NONE")]
-    private int $numpassport;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numpassport", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $numpassport;
 
-    #[ORM\Column(name: "user_nom", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de l'utilisateur ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de l'utilisateur ne peut pas dépasser 255 caractères.")]
-    private string $userNom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_nom", type="string", length=255, nullable=false)
+     */
+    private $userNom;
 
-    #[ORM\Column(name: "user_prenom", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le prénom de l'utilisateur ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le prénom de l'utilisateur ne peut pas dépasser 255 caractères.")]
-    private string $userPrenom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_prenom", type="string", length=255, nullable=false)
+     */
+    private $userPrenom;
 
-    #[ORM\Column(name: "nom_hotel", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le nom de l'hôtel ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom de l'hôtel ne peut pas dépasser 255 caractères.")]
-    private string $nomHotel;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="nom_hotel", type="string", length=255, nullable=true)
+     */
+    private $nomHotel;
 
-    #[ORM\Column(name: "pays", type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Le pays ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom du pays ne peut pas dépasser 255 caractères.")]
-    private string $pays;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=false)
+     */
+    private $pays;
 
-    #[ORM\Column(name: "chambre_reservee", type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Le nombre de chambres réservées ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "Le nombre de chambres réservées doit être positif ou nul.")]
-    private int $chambreReservee;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="chambre_reservee", type="integer", nullable=false)
+     */
+    private $chambreReservee;
 
-    #[ORM\Column(name: "facture_hotel", type: "float", precision: 10, scale: 0, nullable: false)]
-    #[Assert\NotBlank(message: "La facture de l'hôtel ne peut pas être vide.")]
-    #[Assert\Range(min: 0, minMessage: "La facture de l'hôtel doit être positif ou nulle.")]
-    private float $factureHotel;
-
-    
-
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="facture_hotel", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $factureHotel;
 
     public function getNumpassport(): ?int
     {
         return $this->numpassport;
     }
-    public function setNumPassport(int $numpass): static
-    {
-        $this->numpassport = $numpass;
-
-        return $this;
-    }
-
 
     public function getUserNom(): ?string
     {
@@ -89,7 +97,7 @@ class Userhotel
         return $this->nomHotel;
     }
 
-    public function setNomHotel(string $nomHotel): static
+    public function setNomHotel(?string $nomHotel): static
     {
         $this->nomHotel = $nomHotel;
 
@@ -131,6 +139,6 @@ class Userhotel
 
         return $this;
     }
- 
-}
 
+
+}

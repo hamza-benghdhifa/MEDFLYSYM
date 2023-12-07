@@ -1,45 +1,82 @@
 <?php
 
 namespace App\Entity;
-use app\Repository\MedecinRepository;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: MedecinRepository::class)]
-class Medecin implements UserInterface
-
+/**
+ * Medecin
+ *
+ * @ORM\Table(name="medecin")
+ * @ORM\Entity
+ */
+class Medecin
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=255, nullable=false)
+     */
     private $nom;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Prenom", type="string", length=255, nullable=false)
+     */
     private $prenom;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Specialite", type="string", length=255, nullable=false)
+     */
     private $specialite;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Pays", type="string", length=255, nullable=false)
+     */
     private $pays;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="DateGrad", type="date", nullable=false)
+     */
     private $dategrad;
 
-    #[ORM\Column]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="NumberGrad", type="integer", nullable=false)
+     */
     private $numbergrad;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Email", type="string", length=255, nullable=false)
+     */
     private $email;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="MotDePasse", type="string", length=255, nullable=false)
+     */
     private $motdepasse;
-
- 
 
     public function getId(): ?int
     {
@@ -142,34 +179,5 @@ class Medecin implements UserInterface
         return $this;
     }
 
-    public function getUsername(): string
-    {
-        return $this->email;
-    }
 
-    public function getRoles(): array
-    {
-        // Return an array of roles for the user (e.g., ['ROLE_MEDIC'])
-        return ['ROLE_MEDIC'];
-    }
-
-    public function getPassword(): string
-    {
-        return $this->motdepasse;
-    }
-
-    public function getSalt()
-    {
-        // You can leave this method blank unless you're using advanced user features
-    }
-
-    public function eraseCredentials()
-    {
-        // You can leave this method blank unless you're using advanced user features
-    }
-    public function getUserIdentifier(): string
-    {
-        return $this->email;
-    }
 }
-

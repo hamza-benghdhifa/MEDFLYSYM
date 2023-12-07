@@ -3,36 +3,65 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\FactureRepository;
 
-#[ORM\Table(name: "facture")]
-#[ORM\Entity(repositoryClass: FactureRepository::class)]
-
+/**
+ * Facture
+ *
+ * @ORM\Table(name="facture")
+ * @ORM\Entity
+ */
 class Facture
 {
-    #[ORM\Column(name: "num_passport", type: "integer", nullable: false)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    private int $numPassport;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="num_passport", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $numPassport;
 
-    #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
-    private string $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     */
+    private $nom;
 
-    #[ORM\Column(name: "prenom", type: "string", length: 255, nullable: false)]
-    private string $prenom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
+     */
+    private $prenom;
 
-    #[ORM\Column(name: "destination", type: "string", length: 255, nullable: false)]
-    private string $destination;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination", type="string", length=255, nullable=false)
+     */
+    private $destination;
 
-    #[ORM\Column(name: "nom_hotel", type: "string", length: 255, nullable: false)]
-    private string $nomHotel;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_hotel", type="string", length=255, nullable=false)
+     */
+    private $nomHotel;
 
-    #[ORM\Column(name: "nom_compagnie", type: "string", length: 255, nullable: false)]
-    private string $nomCompagnie;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_compagnie", type="string", length=255, nullable=false)
+     */
+    private $nomCompagnie;
 
-    #[ORM\Column(name: "montant", type: "float", precision: 10, scale: 0, nullable: false)]
-    private float $montant;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="montant", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $montant;
 
     public function getNumPassport(): ?int
     {
@@ -110,5 +139,6 @@ class Facture
 
         return $this;
     }
-}
 
+
+}
