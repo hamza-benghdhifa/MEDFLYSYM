@@ -1,0 +1,5 @@
+<form action="{{ path('app_invitations_accept', {'id': invitation.id}) }}" method="post">
+    {{ csrf_token('accept' ~ invitation.idinvi) }}
+    <input type="hidden" name="_method" value="POST">
+    <button type="submit">Accept</button>
+</form>

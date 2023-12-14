@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            margin-top: 30px;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 800px; /* Adjust the maximum width as needed */
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f9fa; /* Light gray background for headers */
+        }
+
+        .btn-create-new {
+            border: 2px solid #007bff;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-create-new:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Messages</h1>
+
+                <table class="table table-bordered table-striped table-hover">
+                    <tbody>
+                        <tr>
+                            <th style="width: 150px;">Id</th>
+                            <td>{{ message.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>ObjetMessage</th>
+                            <td>{{ message.ObjetMessage }}</td>
+                        </tr>
+                        <tr>
+                            <th>ContenuMessage</th>
+                            <td>{{ message.ContenuMessage }}</td>
+                        </tr>
+                        <tr>
+                            <th>DateEnvoi</th>
+                            <td>{{ message.DateEnvoi ? message.DateEnvoi|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ message.Email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_messages_index') }}" class="btn btn-secondary">Back to list</a>
+                <a href="{{ path('app_messages_edit', {'id': message.id}) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ path('app_messages_new') }}" class="btn btn-create-new">Create New</a>
+                {{ include('messages/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

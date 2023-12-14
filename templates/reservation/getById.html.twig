@@ -1,0 +1,108 @@
+ 
+ {% extends 'TempHamza/front.html.twig' %}
+{% block title %}Détails de la Réservation{% endblock %}
+
+{% block body %}
+ 
+<br> <br> <br> <br> 
+
+    <center>
+    <h1 style="color: #A0BCF1;">Détails de la Réservation</h1>
+</center>
+
+
+    <style>
+    div {
+        text-align: center;
+    }
+</style>
+
+<div>
+    <style>
+        table {
+            width: 100%;
+            border: 3px solid #B7CCF4;
+        }
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    <table class="table text-nowrap mb-0 align-middle">
+        <tr>
+            
+           
+        </tr>
+        <tr>
+
+
+
+           <th>NOM medecin:</th>
+            <td>{{ reservation.medecinId.nom ?? 'N/A' }}</td>
+
+
+         
+
+
+        </tr>
+        <tr>
+
+           <th>Date de Rendez-vous:</th>
+            <td>{{ reservation.DateRdv ? reservation.DateRdv.format('d-m-Y H:i:s') : 'N/A' }}</td>
+
+   
+
+
+        </tr>
+
+
+
+        <tr>
+
+
+
+           <th>Patient:</th>
+            <td>{{ reservation.PatientId.nom ?? 'N/A' }}</td>
+
+
+         
+
+
+        </tr>
+
+        
+         <td>
+
+
+
+       
+         <a href="{{ path('app_form_edit', {'id': reservation.id}) }}"><button class="btn btn-primary">Modifier</button></a>
+
+
+          <a href="{{ path('pdf',{'id': reservation.id}) }}"><button  class="btn btn-primary">pdf </button></a> 
+
+
+
+
+         </td>
+
+
+
+       
+       
+
+
+
+
+         </td>
+
+
+        </tr>
+     
+      
+        <tr>
+       
+        </tr>
+    </table>
+
+{% endblock %}
