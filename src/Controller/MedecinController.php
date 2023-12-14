@@ -2,19 +2,28 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Medecin;
+use Twilio\Rest\Client;
+use App\Entity\Medecinm;
+use App\Form\MedecinType;
+use App\Entity\Reservation;
+use App\Entity\Reservasion ;
+use App\Form\ReservasionType;
+use App\Form\MedecinSearchType;
+use App\Form\SearchMaissaType ;
+use App\Entity\MedecinSearchMaissa;
+use App\Repository\MedecinRepository;
+use App\Repository\MedecinmRepository;
+use Twilio\Exceptions\TwilioException;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Twilio\Exceptions\ConfigurationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Medecin;
-use App\Form\MedecinType;
-use App\Form\MedecinSearchType;
-use Symfony\Component\HttpFoundation\Request;
-use App\Repository\MedecinRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Twilio\Exceptions\ConfigurationException;
-use Twilio\Exceptions\TwilioException;
-use Twilio\Rest\Client;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class MedecinController extends AbstractController
 {
@@ -62,6 +71,16 @@ class MedecinController extends AbstractController
             'medecins' => $medecins,
         ]);
     }
+
+
+   
+
+
+
+
+
+
+
 
 
 
@@ -179,6 +198,34 @@ private function sendTwilioMessage(Medecin $medecin): void
     {
         return $this->render('medecin/Firstpage.html.twig');
     }
+
+
+
+
+
+
+
+
+#[Route('/patient/{id}', name: 'app_patient_get_by_id', methods: ['GET'])]
+public function getById(int $id): Response
+{
+   
+    $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($id);
+
+    if (!$reservation) {
+        throw $this->createNotFoundException('Réservation non trouvée');
+    }
+
+    return $this->render('reservation/getById.html.twig', [
+        'reservation' => $reservation,
+    ]);
+}
+
+
+
+
+
+
     
 
     

@@ -54,6 +54,25 @@ reclamation_search:
     path: /reclamation/search
     controller: 'App\Controller\ReclamationController::searchAction'
     methods: ['GET']
+app_invitations_index:
+    path: /invitations
+    controller: 'App\Controller\InvitationsController::index'
+    methods: ['GET']
+
+app_invitations_show:
+    path: /invitations/{idinvi}
+    controller: 'App\Controller\InvitationsController::show'
+    methods: ['GET']
+
+app_invitations_edit:
+    path: /invitations/{idinvi}/edit
+    controller: 'App\Controller\InvitationsController::edit'
+    methods: ['GET', 'POST']
+
+app_invitations_delete:
+    path: /invitations/{idinvi}
+    controller: 'App\Controller\InvitationsController::delete'
+    methods: ['POST']
 
 # Add any other routes you might have...
 app_home:

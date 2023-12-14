@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            margin-top: 30px;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 800px; /* Adjust the maximum width as needed */
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f9fa; /* Light gray background for headers */
+        }
+
+        .btn-create-new {
+            border: 2px solid #007bff;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-create-new:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Messages index</h1>
+        <form method="get" action="{{ path('search_messages') }}" class="form-inline mb-3">
+            <div class="form-group mr-2">
+                <label for="emailInput" class="sr-only">Email</label>
+                <input type="text" id="emailInput" name="email" class="form-control" placeholder="Search by Email">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>ObjetMessage</th>
+                    <th>ContenuMessage</th>
+                    <th>DateEnvoi</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.ObjetMessage }}</td>
+                        <td>{{ message.ContenuMessage }}</td>
+                        <td>{{ message.DateEnvoi ? message.DateEnvoi|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ message.Email }}</td>
+                        <td>
+                            <a href="{{ path('app_messages_show', {'id': message.id}) }}" class="btn btn-secondary btn-sm">Show</a>
+                            <a href="{{ path('app_messages_edit', {'id': message.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_messages_new') }}" class="btn btn-create-new">Create new</a>
+    </div>
+{% endblock %}
+

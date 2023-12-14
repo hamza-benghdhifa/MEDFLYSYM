@@ -20,13 +20,27 @@ services:
         class: App\Controller\ReclamationController
         arguments:
             $reclamation: '@App\Entity\Reclamation'
+    # Your entity repository
+    App\Repository\InvitationsRepository:
+        arguments:
+            $class: App\Entity\Invitations
+            $entityManager: '@doctrine.orm.entity_manager'
 
+    # InvitationsController
+    App\Controller\InvitationsController:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
 
         # ... other configuration
     App\Controller\ReponseReclamationController:
         class: App\ReponseReclamation
     App\Security\PatientLoginFormAuthenticator:
         class: App\Security\PatientLoginFormAuthenticator
+
+    
+    App\Entity\Patient:
+        autowire: true
+
         # ... other configuration
 
     # default configuration for services in *this* file
